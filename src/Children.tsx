@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
+import Dot from "./component/dot";
+import Button from "./component/button";
 
 type ChildrenCompProps = {
   count: number;
-  isRender: boolean;
 };
-const ChildrenComponent = ({ count, isRender }: ChildrenCompProps) => {
+const ChildrenComponent = ({ count }: ChildrenCompProps) => {
   const [countChildren, setCountchildren] = useState(count);
-  const [isRenderChildren, setIsRenderChildren] = useState(isRender);
+
+  const handleClickButton = () => {
+    setCountchildren(countChildren + 1);
+  };
 
   useEffect(() => {
     if (count !== 0) {
@@ -14,42 +18,15 @@ const ChildrenComponent = ({ count, isRender }: ChildrenCompProps) => {
     }
   }, [count]);
 
-  useEffect(() => {
-    if (!isRender) {
-      setIsRenderChildren(true);
-    } else {
-      setIsRenderChildren(isRender);
-    }
-  }, [isRender, countChildren]);
-
-  useEffect(() => {
-    setInterval(() => {
-      setIsRenderChildren(false);
-    }, 3000);
-  }, [isRender, countChildren]);
-
   return (
-    <div className="rounded-md border border-blue-600 w-full h-full p-5 flex justify-between">
-      <div className="flex gap-2 items-baseline">
-        <p className="font-bold">Children</p>
-        <button
-          onClick={() => setCountchildren(countChildren + 1)}
-          className="border rounded-full p-1 border-orange-300 bg-orange-100"
-        >
-          Add Count
-        </button>
+    <div className="rounded-md border border-black w-full h-full p-2 flex flex-col justify-between gap-5">
+      <div className="flex justify-between">
+        <p className="font-bold text-xs">Children</p>
+        <Dot key={countChildren} count={countChildren} text="Render Child" />
       </div>
-      <div className="flex gap-1">
+      <div className="flex gap-1 justify-between text-xs items-center">
+        <Button onClickButton={handleClickButton} text="Add Count" />
         <p>({countChildren})</p>
-        {isRenderChildren && (
-          <p
-            className={`text-red-500 font-bold italic ${
-              isRenderChildren && "animate-pulse duration-300"
-            }`}
-          >
-            Render Children
-          </p>
-        )}
       </div>
     </div>
   );

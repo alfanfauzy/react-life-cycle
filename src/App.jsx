@@ -1,58 +1,61 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import ChildrenComp from "./Children";
 import ChildrenMemo from "./ChildrenMemo";
+import Dot from "./component/dot";
+import Button from "./component/button";
+import ReloadIcon from "./assets/reload-icon";
 
 function App() {
   const [count, setCount] = useState(0);
-  const [isRender, setIsRender] = useState(false);
 
-  useEffect(() => {
-    setIsRender(true);
-  }, [count]);
+  const handleClickButton = () => {
+    setCount(count + 1);
+  };
 
-  useEffect(() => {
-    setInterval(() => {
-      setIsRender(false);
-    }, 3000);
-  }, [isRender]);
+  const handleReloadPage = () => {
+    window.location.reload();
+  };
 
   return (
-    <div className="p-5 w-full h-full rounded-md border-red-500 border text-xs">
-      <div className="rounded-md border border-blue-600 w-full h-full flex flex-col p-5">
-        <div className="flex justify-between mb-2">
-          <div className="flex flex-row gap-2 items-baseline">
-            <h3 className="font-bold text-base">Parent</h3>
-            <button
-              onClick={() => setCount(count + 1)}
-              className="border rounded-full p-1 border-lime-300 bg-lime-100"
-            >
-              Add Count
-            </button>
+    <div className="max-w-lg lg:max-w-2xl mx-auto my-0">
+      <div className="mx-auto my-0 mt-3 flex justify-end">
+        <Button
+          onClickButton={handleReloadPage}
+          text="Reload"
+          preffix={<ReloadIcon />}
+        />
+      </div>
+      <div className="relative">
+        <span className="absolute top-0 left-0 mt-2 ml-2 h-full w-full rounded bg-black"></span>
+        <div className="relative bg-white mt-10 rounded border-2 border-black max-w-lg lg:max-w-2xl h-full flex flex-col p-5">
+          <div className="flex justify-between mb-2 flex-col gap-5">
+            <div className="flex flex-row gap-2 items-baseline justify-between">
+              <h3 className="font-bold text-base">Parent Component</h3>
+              <Dot key={count} count={count} text="Render Parent" />
+            </div>
+            <div className="flex gap-1 items-baseline justify-between text-xs">
+              <Button onClickButton={handleClickButton} text="Add Count" />
+              <p>({count})</p>
+            </div>
           </div>
-          <div className="flex gap-1">
-            <p>({count})</p>
-            {isRender && (
-              <p
-                className={`text-red-500 font-bold italic ${
-                  isRender && "animate-pulse duration-300"
-                }`}
-              >
-                Render Parent
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="flex flex-row gap-5">
-          <ChildrenComp count={count} isRender={isRender} />
-          <ChildrenComp count={count} isRender={isRender} />
-        </div>
 
-        <div className="mt-5">
-          <p className="font-bold text-sm mb-5">Children with memo</p>
-          <div className="flex flex-row gap-5">
-            <ChildrenMemo />
-            <ChildrenMemo />
+          <hr className="my-2" />
+
+          <div className="rounded-md p-5 w-full">
+            <p className="font-bold text-sm mb-2">Children</p>
+            <div className="flex flex-col lg:flex-row gap-5">
+              <ChildrenComp count={count} />
+              <ChildrenComp count={count} />
+            </div>
+
+            <hr className="my-5" />
+
+            <p className="font-bold text-sm mb-2">Children Memo</p>
+            <div className="flex flex-col lg:flex-row gap-5">
+              <ChildrenMemo />
+              <ChildrenMemo />
+            </div>
           </div>
         </div>
       </div>

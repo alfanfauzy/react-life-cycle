@@ -1,43 +1,27 @@
 import React, { memo, useEffect, useState } from "react";
+import Dot from "./component/dot";
+import Button from "./component/button";
 
 const ChildrenMemoComponent = () => {
   const [countChildren, setCountchildren] = useState(0);
-  const [isRenderChildren, setIsRenderChildren] = useState(false);
 
-  useEffect(() => {
-    setIsRenderChildren(true);
-  }, [countChildren]);
-
-  useEffect(() => {
-    setInterval(() => {
-      setIsRenderChildren(false);
-    }, 3000);
-  }, [countChildren]);
-
-  console.log("render memo children is");
+  const handleClickButton = () => {
+    setCountchildren(countChildren + 1);
+  };
 
   return (
-    <div className="rounded-md border border-blue-600 w-full h-full p-5 flex justify-between">
-      <div className="flex gap-2 items-baseline">
-        <p className="font-bold">Children Memo</p>
-        <button
-          onClick={() => setCountchildren(countChildren + 1)}
-          className="border rounded-full p-1 border-orange-300 bg-orange-100"
-        >
-          Add Count
-        </button>
+    <div className="rounded-md border border-black w-full h-full p-2 flex flex-col justify-between gap-5">
+      <div className="flex justify-between">
+        <p className="font-bold text-xs">Child Memo</p>
+        <Dot
+          key={countChildren}
+          count={countChildren}
+          text="Render Child Memo"
+        />
       </div>
-      <div className="flex gap-1">
+      <div className="flex justify-between text-xs items-center">
+        <Button onClickButton={handleClickButton} text="Add Count" />
         <p>({countChildren})</p>
-        {isRenderChildren && (
-          <p
-            className={`text-red-500 font-bold italic ${
-              isRenderChildren && "animate-pulse duration-300"
-            }`}
-          >
-            Render Memo Children
-          </p>
-        )}
       </div>
     </div>
   );
