@@ -1,8 +1,7 @@
-# React + Vite
+# How React Cycle is life
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React Life Cycle](https://github.com/user-attachments/assets/8bafd02b-bc49-4a66-9216-042fe8cc749f)
 
-Currently, two official plugins are available:
+In this project I created a simple React Website to prove how react life cycle is work.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project use hook  `useMemo` to handle freezing(memorizing) component.
